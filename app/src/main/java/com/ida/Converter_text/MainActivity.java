@@ -83,19 +83,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwitch(boolean is_night) {
                 Log.d(TAG, "onSwitch() called with: is_night = [" + is_night + "]");
-                try {
                     if (is_night) {
                         sharedPref.setNightModeState(true);
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
                     } else {
                         sharedPref.setNightModeState(false);
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
                     }
-                }catch (Exception e){
-                    e.printStackTrace();
+
                 }
-            }
+
 
 
         });
@@ -103,7 +100,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimStart() {
                 Log.d(TAG, "onAnimStart() called");
-
+                if (day_night_switch.isNight() == false) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
             }
 
             @Override
@@ -114,9 +115,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimValueChanged(float value) {
 //                background_view.setAlpha(value); Log.d(TAG, "onAnimValueChanged() called with: value = [" + value + "]");
-//                    Intent intent = new Intent(getApplication(),MainActivity.class);
-//                    startActivity(intent);
-//                    finish();
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
             }
         });
         if (sharedPref != null
